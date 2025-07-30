@@ -1,2 +1,29 @@
-<h1>ParkingLots#new</h1>
-<p>Find me in app/views/parking_lots/new.html.erb</p>
+<h1>駐輪場を登録する</h1>
+
+<%= form_with model: @parking_lot, local: true do |f| %>
+  <h4>ジャンル</h4>
+  <%= f.collection_select :genre_id, Genre.all, :id, :name, prompt: "選択してください" %>
+
+  <h4>駐輪場名</h4>
+  <%= f.text_field :parking_lot_name %>
+
+  <h4>住所</h4>
+  <%= f.text_field :address %>
+
+  <h4>緯度</h4>
+  <%= f.text_field :latitude %>
+
+  <h4>経度</h4>
+  <%= f.text_field :longitude %>
+
+  <h4>料金（円）</h4>
+  <%= f.number_field :fee, min: 0 %>
+
+  <h4>画像</h4>
+  <%= f.file_field :image, accept: "image/*" %>
+
+  <h4>説明</h4>
+  <%= f.text_area :description %>
+
+  <%= f.submit '登録する' %>
+<% end %>
