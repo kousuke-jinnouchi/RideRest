@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  namespace :admin do
+    resources :genres, only: [:index, :new, :create, :edit, :update, :destroy]
+  end
   devise_for :users
   root to: "homes#top"
 
