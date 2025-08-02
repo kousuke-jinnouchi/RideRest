@@ -6,7 +6,7 @@ let map;
 
 async function initMap() {
   const { Map } = await google.maps.importLibrary("maps");
-  const {AdvancedMarkerElement} = await google.maps.importLibrary("marker")
+  const {AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker")
 
   map = new Map(document.getElementById("map"), {
     center: { lat: 35.681236, lng: 139.767125 },
@@ -26,12 +26,57 @@ async function initMap() {
       const latitude = item.latitude;
       const longitude = item.longitude;
       const parkingLotName = item.parking_lot_name;
-
-      const marker = new google.maps.marker.AdvancedMarkerElement ({
+      const userImage = item.user.image;
+      const userName = item.user.name;
+      const parkingLotImage = item.image;
+      const address = item.address;
+      const fee = item.fee;
+      const description = item.description;
+      const icon = document.createElement('i');
+      icon.className = 'fa-solid fa-motorcycle'; 
+      const pin = new PinElement({
+        glyph: icon,              
+        glyphColor: 'black',     
+        background: 'white',    
+        borderColor: 'black',  
+        scale: 1.2,              
+      });
+      
+      const marker = new AdvancedMarkerElement ({
         position: { lat: latitude, lng: longitude },
         map,
         title: parkingLotName,
-        // 他の任意のオプションもここに追加可能
+        content: pin.element,
+      });
+
+      const contentString = `
+        <div class="information container p-0">
+          <div class="mb-3 d-flex align-items-center">
+            <img class="rounded-circle mr-2" src="${userImage}" width="40" height="40">
+            <p class="lead m-0 font-weight-bold">${userName}</p>
+          </div>
+          <div class="mb-3">
+            <img class="thumbnail" src="${parkingLotImage}" loading="lazy">
+          </div>
+          <div>
+            <h1 class="h4 font-weight-bold">${parkingLotName}</h1>
+            <p class="text-muted">${address}</p>
+            <p class="text-muted">${fee}円</p>
+            <p class="lead">${description}</p>
+          </div>
+        </div>
+      `;
+      
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        ariaLabel: parkingLotName,
+      });
+      
+      marker.addListener("click", () => {
+          infowindow.open({
+          anchor: marker,
+          map,
+        })
       });
     });
   } catch (error) {

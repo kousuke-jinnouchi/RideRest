@@ -5,33 +5,69 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://kit.fontawesome.com/8e7682d1db.js" crossorigin="anonymous"></script>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column vh-100">
     <header>
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to '投稿フォーム', new_parking_lot_path, data: {turbolinks: "false"} %>
-        </li>
-        <li>
-          <%= link_to 'マイページ', user_path(current_user.id) %>
-        </li>
-        <li>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to "新規登録", new_user_registration_path %>
-        </li>
-        <li>
-          <%= link_to  "ログイン", new_user_session_path %>
-        </li>
-      <% end %>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <%= link_to root_path, class: "navbar-brand" do %>
+            <i class="fa-solid fa-motorcycle mr-1"></i><strong>RideRest</strong>
+          <% end %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <% if user_signed_in? %>
+                <li class="nav-item">
+                  <%= link_to user_path(current_user.id), class: 'nav-link text-light' do %>
+                    <i class="fa-solid fa-user mr-1"></i>マイページ
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to new_parking_lot_path, class: 'nav-link text-light' do %>
+                    <i class="fa-solid fa-pen-to-square mr-1"></i>駐輪場を登録
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-light' do %>
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i>ログアウト
+                  <% end %>
+                </li>
+              <% else %>
+                <li class="nav-item">
+                  <%= link_to root_path, class: 'nav-link text-light' do %>
+                    <i class="fa-solid fa-link"></i> About
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to new_user_registration_path, class: 'nav-link text-light' do %>
+                    <i class="fa-solid fa-user-plus mr-1"></i>新規登録
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to new_user_session_path, class: 'nav-link text-light' do %>
+                    <i class="fa-solid fa-right-to-bracket mr-1"></i>ログイン
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
-    <%= yield %>
+    <main class="flex-shrink-0 bg-light py-4">
+      <%= yield %>
+    </main>
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container text-center">
+        <span class="text-white">© 2025 RideRest. All Rights Reserved.</span>
+      </div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/jquery-jpostal-ja@2.14.45/jquery.jpostal.min.js"></script>
   </body>
 </html>
