@@ -1,33 +1,69 @@
-<h1>駐輪場を登録する</h1>
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+          <h1 class="h4 mb-0">駐輪場を登録する</h1>
+        </div>
+        <div class="card-body p-4">
+          <%= form_with model: @parking_lot, local: true do |f| %>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <%= f.label :genre_id, "ジャンル", class: "form-label" %>
+                <%= f.collection_select :genre_id, Genre.all, :id, :name, { prompt: "選択してください" }, class: "form-select" %>
+              </div>
+              <div class="col-md-6">
+                <%= f.label :parking_lot_name, "駐輪場名", class: "form-label" %>
+                <%= f.text_field :parking_lot_name, class: "form-control", placeholder: "例：渋谷パークバイク駐輪場" %>
+              </div>
+            </div>
+            <div class="row mb-3 align-items-end">
+              <div class="col-md-4">
+                <%= label_tag :zipcode, "郵便番号 (ハイフンなし)", class: "form-label" %>
+                <%= text_field_tag :zipcode, nil, class: "form-control", placeholder: "例: 1500041" %>
+              </div>
+              <div class="col-md-8">
+                <%= f.label :address, "住所", class: "form-label" %>
+                <%= f.text_field :address, class: "form-control", placeholder: "郵便番号から自動入力されます" %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <small class="form-text text-muted mb-2">※緯度・経度は住所から自動で設定されますが、手動で調整も可能です。</small>
+              <div class="col-md-6">
+                <%= f.label :latitude, "緯度", class: "form-label" %>
+                <%= f.text_field :latitude, class: "form-control" %>
+              </div>
+              <div class="col-md-6">
+                <%= f.label :longitude, "経度", class: "form-label" %>
+                <%= f.text_field :longitude, class: "form-control" %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                 <%= f.label :fee, "料金（円）", class: "form-label" %>
+                 <div class="input-group">
+                    <%= f.number_field :fee, min: 0, class: "form-control", placeholder: "例: 500" %>
+                    <span class="input-group-text">円</span>
+                 </div>
+              </div>
+              <div class="col-md-6">
+                <%= f.label :image, "画像", class: "form-label" %>
+                <%= f.file_field :image, accept: "image/*", class: "form-control" %>
+              </div>
+            </div>
 
-<%= form_with model: @parking_lot, local: true do |f| %>
-  <h4>ジャンル</h4>
-  <%= f.collection_select :genre_id, Genre.all, :id, :name, prompt: "選択してください" %>
+            <div class="mb-4">
+              <%= f.label :description, "説明", class: "form-label" %>
+              <%= f.text_area :description, class: "form-control", rows: 4, placeholder: "駐輪場の特徴、利用時の注意点などを入力してください。" %>
+            </div>
+            <div class="d-grid">
+              <%= f.submit '登録する', class: "btn btn-primary btn-lg" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <h4>駐輪場名</h4>
-  <%= f.text_field :parking_lot_name %>
-
-  <h4>郵便番号</h4>
-  <%= text_field_tag :zipcode, nil, placeholder: "郵便番号" %>
-
-  <h4>住所</h4>
-  <%= f.text_field :address %>
-
-  <h4>緯度</h4>
-  <%= f.text_field :latitude %>
-
-  <h4>経度</h4>
-  <%= f.text_field :longitude %>
-
-  <h4>料金（円）</h4>
-  <%= f.number_field :fee, min: 0 %>
-
-  <h4>画像</h4>
-  <%= f.file_field :image, accept: "image/*" %>
-
-  <h4>説明</h4>
-  <%= f.text_area :description %>
-
-  <%= f.submit '登録する' %>
-<% end %>
-<%= javascript_pack_tag "jpostal",  'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag "jpostal", 'data-turbolinks-track': 'reload' %>

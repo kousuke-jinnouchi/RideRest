@@ -23,6 +23,12 @@ class ParkingLotsController < ApplicationController
     @parking_lot = ParkingLot.find(params[:id])
   end
 
+  def destroy
+    parking_lot = ParkingLot.find(params[:id])
+    parking_lot.destroy
+    redirect_to parking_lots_path
+  end
+
   private
 
   def parking_lot_params
