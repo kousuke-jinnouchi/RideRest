@@ -1,6 +1,8 @@
 <% @parking_lots.each do |parking_lot| %>
   <div>
-    <%= image_tag parking_lot.get_image %>
+    <%= link_to parking_lot_path(parking_lot.id) do %>
+      <%= image_tag parking_lot.get_image %>
+    <% end %>
     <p>投稿ユーザー画像：<%= image_tag 'sample-author1.jpg' %></p>
     <p>駐車場名：<%= parking_lot.parking_lot_name %></p>
     <p>住所：<%= parking_lot.address %></p>

@@ -1,2 +1,11 @@
-<h1>ParkingLots#show</h1>
-<p>Find me in app/views/parking_lots/show.html.erb</p>
+<div>
+  <%= image_tag @parking_lot.get_image %>
+  <p>投稿ユーザー画像：<%= image_tag 'sample-author1.jpg' %></p>
+  <p>駐車場名：<%= @parking_lot.parking_lot_name %></p>
+  <p>住所：<%= @parking_lot.address %></p>
+  <p>ジャンル：<%= @parking_lot.genre.name %></p>
+  <p>料金：<%= @parking_lot.fee %>円</p>
+  <p>説明：<%= @parking_lot.description %></p>
+  <p>ユーザーネーム：<%= @parking_lot.user.name %></p>
+  <p>投稿日：<%= @parking_lot.created_at.strftime('%Y/%m/%d') %></p>
+</div>
