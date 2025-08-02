@@ -12,6 +12,11 @@ class ParkingLotsController < ApplicationController
 
   def index
     @parking_lots = ParkingLot.all
+
+    respond_to do |format|
+      format.html 
+      format.json
+    end
   end
 
   def show

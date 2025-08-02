@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root to: "homes#top"
 
   resources :parking_lots, only: [:new, :create, :index, :show]
+  resource :map, only: [:show]
   
   get 'homes/about' => 'homes#about', as: 'about' 
 end
