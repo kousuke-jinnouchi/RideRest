@@ -6,8 +6,11 @@ class ParkingLotsController < ApplicationController
   def create
     @parking_lot = ParkingLot.new(parking_lot_params)
     @parking_lot.user_id = current_user.id 
-    @parking_lot.save
-    redirect_to parking_lots_path
+    if @parking_lot.save
+      redirect_to parking_lots_path
+    else
+      render :new
+    end
   end
 
   def index
@@ -21,6 +24,16 @@ class ParkingLotsController < ApplicationController
 
   def show
     @parking_lot = ParkingLot.find(params[:id])
+  end
+
+  def edit 
+    @parking_lot = ParkingLot.find(params[:id])
+  end
+
+  def update
+    parking_lot = ParkingLot.find(params[:id])
+    parking_lot.update(parking_lot_params)
+    redirect_to parking_lot_path(parking_lot.id) 
   end
 
   def destroy

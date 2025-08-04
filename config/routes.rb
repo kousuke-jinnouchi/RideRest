@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "homes#about"
 
-  resources :parking_lots, only: [:new, :create, :index, :show, :destroy]
+  resources :parking_lots
   resources :users, only: [:show, :edit, :update]
   resource :map, only: [:show]
 end
