@@ -11,7 +11,12 @@ class ParkingLot < ApplicationRecord
     image
   end
 
+  validates :parking_lot_name, presence: true
   validates :address, presence: true
+  validates :latitude, presence: true
+  validates :longitude, presence: true
+  validates :fee, presence: true
+  validates :description, presence: true
 
   geocoded_by :address
   after_validation :geocode
