@@ -31,9 +31,12 @@ class ParkingLotsController < ApplicationController
   end
 
   def update
-    parking_lot = ParkingLot.find(params[:id])
-    parking_lot.update(parking_lot_params)
-    redirect_to parking_lot_path(parking_lot.id) 
+    @parking_lot = ParkingLot.find(params[:id])
+    if @parking_lot.update(parking_lot_params)
+      redirect_to parking_lot_path(@parking_lot.id) 
+    else
+      render :edit
+    end
   end
 
   def destroy
