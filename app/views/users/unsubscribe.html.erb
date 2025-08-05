@@ -1,0 +1,14 @@
+<div class="container text-center my-5">
+  <h1 class="h3">本当に退会しますか？</h1>
+
+  <p class="my-4">
+    退会すると、現在保存されているあなたの情報が利用できなくなります。<br>
+    再度ご利用いただく場合には、新規登録が必要となります。<br>
+    よろしければ、「退会する」ボタンを押してください。
+  </p>
+
+  <div class="d-flex justify-content-center gap-3">
+    <%= link_to "退会する", withdraw_path, method: :patch, class: "btn btn-outline-danger mr-3" %>
+    <%= link_to "キャンセル", :back, class: "btn btn-outline-secondary" %>
+  </div>
+</div>
