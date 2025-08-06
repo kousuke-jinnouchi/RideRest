@@ -1,4 +1,4 @@
-class ParkingLotsController < ApplicationController
+class Public::ParkingLotsController < ApplicationController
   def new
     @parking_lot = ParkingLot.new
   end
