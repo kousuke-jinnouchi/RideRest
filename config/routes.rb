@@ -7,14 +7,14 @@ Rails.application.routes.draw do
     resources :users, only: [:destroy]
     resources :genres, only: [:index, :new, :create, :edit, :update, :destroy]
   end
-  devise_for :users
-  root to: "homes#about"
 
-  resources :parking_lots
-  
-  get '/users/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
-  patch '/users/withdraw' => 'users#withdraw', as: 'withdraw'
-  resources :users, only: [:show, :edit, :update]
-
-  resource :map, only: [:show]
+  scope module: :public do
+    devise_for :users
+    root to: "homes#about"
+    resources :parking_lots
+    get '/users/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
+    patch '/users/withdraw' => 'users#withdraw', as: 'withdraw'
+    resources :users, only: [:show, :edit, :update]
+    resource :map, only: [:show]
+  end
 end

@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Public::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @parking_lots = @user.parking_lots
