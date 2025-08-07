@@ -48,6 +48,6 @@ class Public::ParkingLotsController < ApplicationController
   private
 
   def parking_lot_params
-    params.require(:parking_lot).permit(:genre_id, :parking_lot_name, :address, :fee, :description, :image)
+    params.require(:parking_lot).permit(:genre_id, :parking_lot_name, :address, :fee, :description, :image, :latitude, :longitude)
   end
 end

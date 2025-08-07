@@ -19,6 +19,6 @@ class ParkingLot < ApplicationRecord
   validates :description, presence: true
 
   geocoded_by :address
-  after_validation :geocode
+  before_validation :geocode
 end
 
