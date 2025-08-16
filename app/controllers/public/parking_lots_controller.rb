@@ -26,6 +26,7 @@ class Public::ParkingLotsController < ApplicationController
 
   def show
     @parking_lot = ParkingLot.find(params[:id])
+    @comment = Comment.new
   end
 
   def edit 

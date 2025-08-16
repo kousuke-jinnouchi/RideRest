@@ -1,7 +1,9 @@
 class ParkingLot < ApplicationRecord
+  
   has_one_attached :image
   belongs_to :user
   belongs_to :genre
+  has_many :comments, dependent: :destroy
 
   def get_image
     unless image.attached?
