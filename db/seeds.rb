@@ -70,4 +70,4 @@ ParkingLot.find_or_create_by!(address: '東京都千代田区丸の内２丁目�
   parking_lot.image = ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('db/fixtures/sample-parking4.jpg')), filename: 'sample-parking4.jpg')
 end
 
-puts 'シードデータの投入完了'
+puts 'シードデータの投入完了' 
