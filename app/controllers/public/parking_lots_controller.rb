@@ -1,4 +1,6 @@
 class Public::ParkingLotsController < ApplicationController
+  before_action :is_maching_post_user, only: [:edit, :update, :destroy]
+
   def new
     @parking_lot = ParkingLot.new
   end
@@ -50,4 +52,12 @@ class Public::ParkingLotsController < ApplicationController
   def parking_lot_params
     params.require(:parking_lot).permit(:genre_id, :parking_lot_name, :address, :fee, :description, :image, :latitude, :longitude)
   end
+
+  def is_maching_post_user
+    @parking_lot = ParkingLot.find(params[:id])
+    unless @parking_lot.user_id == current_user.id
+      redirect_to parking_lots_path
+    end
+  end
+  
 end

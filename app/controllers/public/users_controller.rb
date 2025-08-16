@@ -1,4 +1,6 @@
 class Public::UsersController < ApplicationController
+  before_action :is_maching_login_user, only: [:edit, :update]
+  
   def show
     @user = User.find(params[:id])
     @parking_lots = @user.parking_lots
@@ -35,4 +37,11 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:name, :profile_image, :introduction, :is_active)
   end
   
+  def is_maching_login_user
+    user = User.find(params[:id])
+    unless user.id == current_user.id
+      redirect_to parking_lots_path
+    end
+  end
+
 end
