@@ -57,7 +57,7 @@ class Public::ParkingLotsController < ApplicationController
   private
 
   def parking_lot_params
-    params.require(:parking_lot).permit(:genre_id, :parking_lot_name, :address, :fee, :description, :image, :latitude, :longitude, tag_list: [])
+    params.require(:parking_lot).permit(:parking_lot_name, :address, :fee, :description, :image, :latitude, :longitude, tag_list: [])
   end
 
   def is_maching_post_user
