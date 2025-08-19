@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'searches/search'
+  end
   devise_for :admin, skip: [:registrations, :password], controllers: {
     sessions: 'admin/sessions'
   }
@@ -11,6 +14,7 @@ Rails.application.routes.draw do
   scope module: :public do
     devise_for :users
     root to: "homes#about"
+    get 'search' => 'searches#search', as: 'search'
     resources :parking_lots do
       resources :comments, only: [:create, :destroy]
     end
