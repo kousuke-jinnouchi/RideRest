@@ -10,6 +10,15 @@
             <span class="badge bg-primary rounded-pill"><%= @parking_lot.genre.name %></span>
           </p>
           <h2 class="card-title h3 mb-1"><%= @parking_lot.parking_lot_name %></h2>
+          <% if @parking_lot.tag_list.present? %>
+            <div class="mb-3">
+              <% @parking_lot.tag_list.each do |tag| %>
+                <%= link_to parking_lots_path(tag: tag), class: "btn btn-sm btn-outline-info me-2 mb-2" do %>
+                  <i class="fas fa-tag mr-1"></i><%= tag %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
           <p class="card-subtitle mb-3 text-muted">
             <i class="fas fa-map-marker-alt"></i> 
             <%= @parking_lot.address %>

@@ -1,5 +1,6 @@
 class Public::ParkingLotsController < ApplicationController
   before_action :is_maching_post_user, only: [:edit, :update, :destroy]
+  before_action :set_all_tags, only: [:new, :edit, :create, :update]
 
   def new
     @parking_lot = ParkingLot.new
@@ -16,7 +17,12 @@ class Public::ParkingLotsController < ApplicationController
   end
 
   def index
-    @parking_lots = ParkingLot.all
+    if params[:tag]
+      @parking_lots = ParkingLot.tagged_with(params[:tag])
+      @tag_name = params[:tag]
+    else
+      @parking_lots = ParkingLot.all
+    end
 
     respond_to do |format|
       format.html 
@@ -51,7 +57,7 @@ class Public::ParkingLotsController < ApplicationController
   private
 
   def parking_lot_params
-    params.require(:parking_lot).permit(:genre_id, :parking_lot_name, :address, :fee, :description, :image, :latitude, :longitude)
+    params.require(:parking_lot).permit(:genre_id, :parking_lot_name, :address, :fee, :description, :image, :latitude, :longitude, tag_list: [])
   end
 
   def is_maching_post_user
@@ -59,6 +65,10 @@ class Public::ParkingLotsController < ApplicationController
     unless @parking_lot.user_id == current_user.id
       redirect_to parking_lots_path
     end
+  end
+
+  def set_all_tags
+    @all_tags = ActsAsTaggableOn::Tag.all
   end
   
 end
