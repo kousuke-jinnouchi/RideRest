@@ -47,6 +47,7 @@
                 <i class="fas fa-map-marker-alt"></i> 
                 <%= parking_lot.address %>
               </p>
+              <p>コメント件数：<%= parking_lot.comments.count %></p>
               <div class="mt-auto pt-2 border-top">
                 <div class="d-flex align-items-center">
                   <%= image_tag parking_lot.user.get_profile_image(100, 100), class: 'rounded-circle mr-2', width: 30, height: 30 %>
