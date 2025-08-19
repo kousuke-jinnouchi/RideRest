@@ -18,9 +18,6 @@
               <div class="card h-100 shadow-sm border-0 card-hover">
                 <%= image_tag parking_lot.get_image, class: 'card-img-top', style: 'height: 150px; object-fit: cover;' %>
                 <div class="card-body">
-                  <p class="card-text mb-1">
-                    <span class="badge bg-secondary rounded-pill"><%= parking_lot.genre.name %></span>
-                  </p>
                   <h5 class="card-title text-dark mb-1"><%= parking_lot.parking_lot_name %></h5>
                   <% if parking_lot.tag_list.present? %>
                     <div class="mb-3">

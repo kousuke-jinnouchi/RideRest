@@ -6,9 +6,6 @@
       </div>
       <div class="col-md-6 d-flex flex-column">
         <div class="card-body">
-          <p class="card-text mb-2">
-            <span class="badge bg-primary rounded-pill"><%= @parking_lot.genre.name %></span>
-          </p>
           <h2 class="card-title h3 mb-1"><%= @parking_lot.parking_lot_name %></h2>
           <% if @parking_lot.tag_list.present? %>
             <div class="mb-3">
