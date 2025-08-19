@@ -25,6 +25,17 @@
                 <%= f.text_field :parking_lot_name, class: "form-control", placeholder: "例：渋谷パークバイク駐輪場" %>
               </div>
             </div>
+            <div class="field mb-5">
+              <%= f.label :tag_list, "タグ(複数選択可)" %>
+              <div class="tag-checkboxes d-flex flex-wrap">
+                <%= f.collection_check_boxes(:tag_list, @all_tags, :name, :name) do |b| %>
+                  <div class="form-check mr-4">
+                    <%= b.check_box(class: 'form-check-input') %>
+                    <%= b.label(class: 'form-check-label') %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
             <div class="row mb-3 align-items-end">
               <div class="col-md-4">
                 <%= label_tag :zipcode, "郵便番号 (ハイフンなし)", class: "form-label" %>

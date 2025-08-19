@@ -22,5 +22,6 @@ class ParkingLot < ApplicationRecord
 
   geocoded_by :address
   before_validation :geocode
+  acts_as_taggable_on :tags
 end
 
