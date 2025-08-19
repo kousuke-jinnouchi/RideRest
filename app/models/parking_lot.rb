@@ -12,6 +12,10 @@ class ParkingLot < ApplicationRecord
     image
   end
 
+  def self.search_for(content)
+    ParkingLot.where('parking_lot_name LIKE ?', '%' + content + '%')
+  end
+
   validates :parking_lot_name, presence: true
   validates :address, presence: true
   validates :latitude, presence: true

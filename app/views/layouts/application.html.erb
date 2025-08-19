@@ -21,8 +21,20 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto align-items-center"> 
               <% if user_signed_in? %>
+                <li class="nav-item mr-lg-3 my-2 my-lg-0">
+                  <%= form_with url: search_path, method: :get, class: "form-inline" do |f| %>
+                    <div class="input-group input-group-sm">
+                      <%= f.text_field :content, class: 'form-control border-secondary text-light bg-dark', placeholder: '駐輪場を検索', style: 'width: 300px;' %>
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-dark border-secondary">
+                          <i class="fas fa-search text-info"></i>
+                        </button>
+                      </div>
+                    </div>
+                  <% end %>
+                </li>
                 <li class="nav-item">
                   <%= link_to user_path(current_user.id), class: 'nav-link text-light' do %>
                     <i class="fa-solid fa-user mr-1"></i>マイページ
