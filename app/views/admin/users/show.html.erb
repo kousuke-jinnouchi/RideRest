@@ -1,0 +1,51 @@
+<div class="container-fluid mt-4">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3 class="card-title mb-0"><%= @user.name %>さんの詳細</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th style="width: 30%;">ID</th>
+                <td><%= @user.id %></td>
+              </tr>
+              <tr>
+                <th>氏名</th>
+                <td><%= @user.name %></td>
+              </tr>
+              <tr>
+                <th>メールアドレス</th>
+                <td><%= @user.email %></td>
+              </tr>
+              <tr>
+                <th>登録日時</th>
+                <td><%= @user.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+              </tr>
+              <tr>
+                <th>ステータス</th>
+                <td>
+                  <% if @user.is_active? %>
+                    <span class="font-weight-bold text-success">有効</span>
+                  <% else %>
+                    <span class="font-weight-bold text-secondary">退会</span>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-4 text-center">
+          <h5 class="mb-3">会員ステータスの変更</h5>
+          <% if @user.is_active? %>
+            <%= link_to "このユーザーを退会させる", admin_user_path(@user), method: :patch, data: { confirm: '本当に退会させますか？' }, class: "btn btn-danger" %>
+          <% else %>
+            <%= link_to "このユーザーを有効にする", admin_user_path(@user), method: :patch, data: { confirm: '本当に有効にしますか？' }, class: "btn btn-success" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

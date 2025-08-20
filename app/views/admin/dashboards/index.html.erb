@@ -1,9 +1,78 @@
-<h1>全ユーザー一覧</h1>
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= user.name %> - <%= user.email %>
-      <%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
-    </li>
-  <% end %>
-</ul>
+<div class="container-fluid mt-4">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">ダッシュボード</h1>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                総ユーザー数</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @total_users %>人</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-users fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                総投稿数</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @total_parking_lots %>件</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-parking fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">有効 / 退会済み会員
+              </div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%= @active_users %> / <%= @withdrawn_users %>人</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-user-check fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">管理メニュー</h6>
+        </div>
+        <div class="card-body">
+          <p>各種管理機能へはこちらから移動できます。</p>
+          <%= link_to admin_users_path, class: "btn btn-info" do %>
+            <i class="fas fa-users mr-2"></i>ユーザー管理
+          <% end %>
+          <%# 今後機能が増えたら、ここにボタンを追加していく %>
+          <%# <%= link_to ... , class: "btn btn-success" do %>
+            <%# <i class="fas fa-comments mr-2"></i>コメント管理 %>
+          <%# <% end > %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
