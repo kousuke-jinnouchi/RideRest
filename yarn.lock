@@ -5351,6 +5351,11 @@ randomfill@^1.0.4:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
+raty-js@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/raty-js/-/raty-js-4.3.0.tgz#bfb1ec44ed9a2e0ff24d23e6dc8f4a3c9ffc3dc6"
+  integrity sha512-ZBnYsEg4YvcUbhdtLlBElmB4qjIiHYaZv5W0ThaKWLaS32xPCI9iPGIe35GuYLLrVIgUZ/IdS3+SO0NfPgXrDA==
+
 read-cache@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/read-cache/-/read-cache-1.0.0.tgz#e664ef31161166c9751cdbe8dbcf86b5fb58f774"
