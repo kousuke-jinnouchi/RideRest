@@ -4,4 +4,5 @@ class Comment < ApplicationRecord
   belongs_to :parking_lot
 
   validates :body, presence: true, length: { maximum: 200 }
+  validates :score, presence: true
 end
