@@ -61,7 +61,7 @@ async function initMap() {
           <div>
             <h1 class="h4 font-weight-bold">${parkingLotName}</h1>
             <p class="text-muted">${address}</p>
-            <p class="text-muted">${fee}円</p>
+            <p class="text-muted">${fee}</p>
             <p class="lead">${description}</p>
           </div>
         </div>
