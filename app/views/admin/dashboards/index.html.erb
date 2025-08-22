@@ -67,10 +67,9 @@
           <%= link_to admin_users_path, class: "btn btn-info" do %>
             <i class="fas fa-users mr-2"></i>ユーザー管理
           <% end %>
-          <%# 今後機能が増えたら、ここにボタンを追加していく %>
-          <%# <%= link_to ... , class: "btn btn-success" do %>
-            <%# <i class="fas fa-comments mr-2"></i>コメント管理 %>
-          <%# <% end > %>
+          <%= link_to admin_comments_path, class: "btn btn-success" do %>
+            <i class="fas fa-comments mr-2"></i>コメント管理 
+          <% end %>
         </div>
       </div>
     </div>
