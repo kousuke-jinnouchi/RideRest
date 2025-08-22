@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'comments/index'
+  end
   namespace :public do
     get 'searches/search'
   end
@@ -8,6 +11,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'dashboards', to: 'dashboards#index'
     resources :users, only: [:index, :show, :update]
+    resources :comments, only: [:index, :destroy]
   end
 
   scope module: :public do
