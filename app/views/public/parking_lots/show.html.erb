@@ -114,6 +114,12 @@
   document.addEventListener('turbolinks:load', function() {
     let starForm = document.querySelector('#star-rating-form');
     if (starForm) {
+      if (starForm.innerHTML.trim() !== "") {
+        let ratyInstance = Raty.getInstance(starForm);
+        if(ratyInstance) {
+          ratyInstance.destroy();
+        }
+      }
       raty(starForm, {
         size:      36,
         starOff:  '<%= asset_path('star-off.png') %>', 
@@ -126,6 +132,12 @@
 
     let reviewStars = document.querySelectorAll('.review-star');
     reviewStars.forEach(function(starElem) {
+      if (starElem.innerHTML.trim() !== "") {
+        let ratyInstance = Raty.getInstance(starElem);
+        if(ratyInstance) {
+          ratyInstance.destroy();
+        }
+      }
       raty(starElem, {
         starOff:  '<%= asset_path('star-off.png') %>',
         starOn :  '<%= asset_path('star-on.png') %>',
