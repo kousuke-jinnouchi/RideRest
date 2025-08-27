@@ -55,6 +55,15 @@
         </div>
         <div class="card-body">
           <%= form_with model: [@parking_lot, @comment], url: parking_lot_comments_path(@parking_lot) do |f| %>
+            <% if @comment.errors.any? %>
+              <div class="alert alert-danger">
+                <ul>
+                  <% @comment.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
             <div class="form-group row align-items-center">
               <label class="col-md-3 col-form-label text-md-right font-weight-bold">総合評価</label>
               <div class="col-md-9">

@@ -5,7 +5,15 @@
         <div class="card-body p-4 p-md-5">
           <h2 class="card-title text-center mb-4 font-weight-bold">Sign up</h2>
           <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
-            <%= render "devise/shared/error_messages", resource: resource %>
+            <% if @user.errors.any? %>
+              <div class="alert alert-danger" role="alert">
+                <ul class="mb-0">
+                  <% @user.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
             <div class="form-group">
               <%= f.label :name %>
               <%= f.text_field :name, class: 'form-control', placeholder: "Taro Tanaka" %>

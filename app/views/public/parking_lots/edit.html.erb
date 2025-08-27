@@ -6,12 +6,15 @@
           <h1 class="h4 mb-0">駐輪場を編集する</h1>
         </div>
         <% if @parking_lot.errors.any? %>
-          <%=@parking_lot.errors.count %>件のエラーが発生しました。
-          <ul>
-            <% @parking_lot.errors.full_messages.each do |message|%>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
+          <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">入力内容に <%= @parking_lot.errors.count %> 件のエラーがありました</h4>
+            <hr>
+            <ul class="mb-0">
+              <% @parking_lot.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
         <div class="card-body p-4">
           <%= form_with model: @parking_lot, local: true do |f| %>
