@@ -10,7 +10,7 @@ class Public::ParkingLotsController < ApplicationController
     @parking_lot = ParkingLot.new(parking_lot_params)
     @parking_lot.user_id = current_user.id 
     if @parking_lot.save
-      redirect_to parking_lots_path
+      redirect_to parking_lots_path, notice: '駐輪場を登録しました。'
     else
       render :new
     end
@@ -42,7 +42,7 @@ class Public::ParkingLotsController < ApplicationController
   def update
     @parking_lot = ParkingLot.find(params[:id])
     if @parking_lot.update(parking_lot_params)
-      redirect_to parking_lot_path(@parking_lot.id) 
+      redirect_to parking_lot_path(@parking_lot.id), notice: '駐輪場の情報を更新しました。' 
     else
       render :edit
     end
@@ -51,7 +51,7 @@ class Public::ParkingLotsController < ApplicationController
   def destroy
     parking_lot = ParkingLot.find(params[:id])
     parking_lot.destroy
-    redirect_to parking_lots_path
+    redirect_to parking_lots_path, notice: '駐輪場を削除しました。'
   end
 
   private
