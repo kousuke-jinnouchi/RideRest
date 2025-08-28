@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_22_085638) do
+ActiveRecord::Schema.define(version: 2025_08_28_155816) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -58,7 +58,10 @@ ActiveRecord::Schema.define(version: 2025_08_22_085638) do
     t.integer "parking_lot_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "score", precision: 5, scale: 3, default: "0.0", null: false
+    t.decimal "score", precision: 5, scale: 3, default: "0.0"
+    t.integer "parent_id"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["user_id", "parking_lot_id"], name: "index_comments_on_user_id_and_parking_lot_id", unique: true, where: "parent_id IS NULL"
   end
 
   create_table "parking_lots", force: :cascade do |t|
@@ -123,6 +126,7 @@ ActiveRecord::Schema.define(version: 2025_08_22_085638) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "parking_lots", "users"
   add_foreign_key "taggings", "tags"
 end

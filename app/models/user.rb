@@ -12,6 +12,10 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
   validates :introduction, length: { maximum: 200 }
 
+  def reviewed_by?(parking_lot)
+    comments.where(parking_lot_id: parking_lot.id, parent_id: nil).exists?
+  end
+
   def get_profile_image(width, height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
