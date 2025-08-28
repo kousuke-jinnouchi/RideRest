@@ -16,6 +16,16 @@
               <% end %>
             </div>
           <% end %>
+          <div class="d-flex align-items-center mb-3">
+            <h5 class="mb-0 mr-3">総合評価</h5>
+            <% if @parking_lot.reviews_count > 0 %>
+              <div class="review-star" data-score="<%= @parking_lot.average_score %>"></div>
+              <span class="font-weight-bold ml-2 h4 mb-0"><%= @parking_lot.average_score %></span>
+              <span class="text-muted ml-2">(<%= @parking_lot.reviews_count %>件)</span>
+            <% else %>
+              <span class="text-muted">レビューはまだありません</span>
+            <% end %>
+          </div>
           <p class="card-subtitle mb-3 text-muted">
             <i class="fas fa-map-marker-alt"></i> 
             <%= @parking_lot.address %>
@@ -47,73 +57,110 @@
     </div>
   </div>
   <div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-10">
-      <div class="card shadow-sm mb-5">
-        <div class="card-header bg-light">
-          <h4 class="mb-0">レビューを投稿する</h4>
-        </div>
-        <div class="card-body">
-          <%= form_with model: [@parking_lot, @comment], url: parking_lot_comments_path(@parking_lot) do |f| %>
-            <% if @comment.errors.any? %>
-              <div class="alert alert-danger">
-                <ul>
-                  <% @comment.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
-            <div class="form-group row align-items-center">
-              <label class="col-md-3 col-form-label text-md-right font-weight-bold">総合評価</label>
-              <div class="col-md-9">
-                <div id="star-rating-form"></div>
-              </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <% if user_signed_in? && !current_user.reviewed_by?(@parking_lot) %>
+          <div class="card shadow-sm mb-5">
+            <div class="card-header bg-light">
+              <h4 class="mb-0">レビューを投稿する</h4>
             </div>
-            <div class="form-group">
-              <%= f.label :body, "レビュー", class: "font-weight-bold" %>
-              <%= f.text_area :body, rows: 5, class: 'form-control', placeholder: "この駐輪場の良かった点、気になった点などを自由にお書きください。" %>
-            </div>
-            <div class="text-right">
-              <%= f.submit "投稿する", class: 'btn btn-primary btn-lg' %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <div>
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
-          <h4 class="mb-0">
-            レビュー (<%= @parking_lot.comments.count %>件)
-          </h4>
-        </div>
-        <% if @parking_lot.comments.any? %>
-          <% @parking_lot.comments.each do |comment| %>
-            <div class="media mb-4">
-              <%= image_tag comment.user.get_profile_image(100,100), class: 'mr-3 rounded-circle', style: 'width: 64px; height: 64px;' %>
-              <div class="media-body">
-                <div class="d-flex justify-content-between">
-                  <div>
-                    <h5 class="mt-0 font-weight-bold"><%= comment.user.name %></h5>
-                    <div class="review-star" data-score="<%= comment.score %>"></div>
-                  </div>
-                  <small class="text-muted"><%= comment.created_at.strftime('%Y/%m/%d') %></small>
-                </div>
-                <p class="mt-2 mb-1"><%= simple_format(h(comment.body)) %></p>
-                <% if comment.user == current_user %>
-                  <div class="text-right">
-                    <%= link_to '削除', parking_lot_comment_path(comment.parking_lot, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger btn-sm' %>
+            <div class="card-body">
+              <%= form_with model: [@parking_lot, @comment], url: parking_lot_comments_path(@parking_lot) do |f| %>
+                <% if @comment.errors.any? %>
+                  <div class="alert alert-danger">
+                    <ul>
+                      <% @comment.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                    </ul>
                   </div>
                 <% end %>
-              </div>
+                <div class="form-group row align-items-center">
+                  <label class="col-md-3 col-form-label text-md-right font-weight-bold">評価</label>
+                  <div class="col-md-9">
+                    <div id="star-rating-form"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= f.label :body, "レビュー", class: "font-weight-bold" %>
+                  <%= f.text_area :body, rows: 5, class: 'form-control', placeholder: "この駐輪場の良かった点、気になった点などを自由にお書きください。" %>
+                </div>
+                <div class="text-right">
+                  <%= f.submit "投稿する", class: 'btn btn-primary btn-lg' %>
+                </div>
+              <% end %>
             </div>
-            <hr class="my-4">
-          <% end %>
-        <% else %>
-          <div class="text-center p-5 bg-light rounded">
-            <p class="h5 text-muted">まだレビューはありません。</p>
-            <p class="text-muted">この駐輪場の最初のレビューを投稿してみませんか？</p>
           </div>
         <% end %>
+        <div>
+          <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
+            <h4 class="mb-0">
+              レビュー (<%= @parking_lot.comments.count %>件)
+            </h4>
+          </div>
+          <% if @parking_lot.comments.any? %>
+            <% @parking_lot.comments.where(parent_id: nil).each do |comment| %>
+              <div class="media mb-4" id="comment-<%= comment.id %>">
+                <%= image_tag comment.user.get_profile_image(100,100), class: 'mr-3 rounded-circle', style: 'width: 64px; height: 64px;' %>
+                <div class="media-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h5 class="mt-0 font-weight-bold"><%= comment.user.name %></h5>
+                      <div class="review-star" data-score="<%= comment.score %>"></div>
+                    </div>
+                    <small class="text-muted"><%= comment.created_at.strftime('%Y/%m/%d') %></small>
+                  </div>
+                  <p class="mt-2 mb-1"><%= simple_format(h(comment.body)) %></p>
+                  <div class="text-right">
+                    <button class="btn btn-sm btn-outline-primary reply-button" data-comment-id="<%= comment.id %>">返信する</button>
+                    <% if comment.user == current_user %>
+                      <%= link_to '削除', parking_lot_comment_path(comment.parking_lot, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger btn-sm' %>
+                    <% end %>
+                  </div>
+                  <div class="reply-form-container" id="reply-form-<%= comment.id %>" style="display: none;">
+                    <%= form_with model: [@parking_lot, @comment], url: parking_lot_comments_path(@parking_lot) do |f| %>
+                      <%= f.hidden_field :parent_id, value: comment.id %> 
+                      <div class="form-group mt-3">
+                        <%= f.text_area :body, rows: 3, class: 'form-control', placeholder: "#{comment.user.name}さんへの返信" %>
+                      </div>
+                      <div class="text-right">
+                        <%= f.submit "返信を投稿", class: 'btn btn-primary btn-sm' %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="replies mt-3">
+                    <% comment.replies.each do |reply| %>
+                      <div class="media">
+                        <%= image_tag reply.user.get_profile_image(100,100), class: 'mr-3 rounded-circle', style: 'width: 48px; height: 48px;' %>
+                        <div class="media-body">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6 class="mt-0 font-weight-bold"><%= reply.user.name %></h6>
+                            </div>
+                            <small class="text-muted"><%= reply.created_at.strftime('%Y/%m/%d') %></small>
+                          </div>
+                          <p class="mt-1 mb-1"><%= simple_format(h(reply.body)) %></p>
+                          <% if reply.user == current_user %>
+                              <div class="text-right">
+                                <%= link_to '削除', parking_lot_comment_path(reply.parking_lot, reply), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger btn-sm' %>
+                              </div>
+                            <% end %>
+                        </div>
+                      </div>
+                      <hr class="my-2">
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-4">
+            <% end %>
+          <% else %>
+            <div class="text-center p-5 bg-light rounded">
+              <p class="h5 text-muted">まだレビューはありません。</p>
+              <p class="text-muted">この駐輪場の最初のレビューを投稿してみませんか？</p>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
@@ -154,6 +201,17 @@
         half:     true,
         readOnly: true, 
         score:    starElem.dataset.score, 
+      });
+    });
+    document.querySelectorAll('.reply-button').forEach(function(button) {
+      button.addEventListener('click', function() {
+        const commentId = this.dataset.commentId;
+        const replyFormContainer = document.getElementById('reply-form-' + commentId);
+        if (replyFormContainer.style.display === 'none') {
+          replyFormContainer.style.display = 'block';
+        } else {
+          replyFormContainer.style.display = 'none';
+        }
       });
     });
   });

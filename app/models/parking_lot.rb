@@ -16,6 +16,16 @@ class ParkingLot < ApplicationRecord
     ParkingLot.where('parking_lot_name LIKE ?', '%' + content + '%')
   end
 
+  def average_score
+    parent_comments = self.comments.where(parent_id: nil)
+    return 0.0 if parent_comments.empty?
+    parent_comments.average(:score).to_f.round(1)
+  end
+
+  def reviews_count
+    comments.where(parent_id: nil).count
+  end
+
   validates :parking_lot_name, presence: true
   validates :address, presence: true
   validates :latitude, presence: true
