@@ -34,7 +34,7 @@ class ParkingLot < ApplicationRecord
   validates :description, presence: true
 
   geocoded_by :address
-  before_validation :geocode
+  before_validation :geocode, unless: -> { Rails.env.test? }
   acts_as_taggable_on :tags
 end
 
