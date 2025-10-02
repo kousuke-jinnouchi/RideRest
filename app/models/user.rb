@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :parking_lots, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_parking_lots, through: :favorites, source: :parking_lot
 
   has_one_attached :profile_image
 

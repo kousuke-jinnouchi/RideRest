@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     root to: "homes#about"
     get 'search' => 'searches#search', as: 'search'
     resources :parking_lots do
+      resource :favorite, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
     end
     get '/users/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'

@@ -35,7 +35,12 @@
                     <i class="fas fa-map-marker-alt"></i> 
                     <%= truncate(parking_lot.address, length: 25) %>
                   </p>
-                  <p>コメント件数：<%= parking_lot.comments.count %></p>
+                  <div class="d-flex align-items-center"
+                    <span>コメント件数：<%= parking_lot.comments.count %></span>
+                    <% if user_signed_in? && parking_lot.favorited_by?(current_user) %>
+                      <i class="fas fa-heart text-danger ml-auto fa-2x"></i>
+                    <% end %>
+                  </div>
                   <div class="mt-2 pt-2 border-top">
                     <div class="d-flex align-items-center">
                       <%= image_tag parking_lot.user.get_profile_image(100, 100), class: 'rounded-circle mr-3', width: 30, height: 30 %>
